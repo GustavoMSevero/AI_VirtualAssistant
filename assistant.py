@@ -1,5 +1,6 @@
 import pyttsx3 # pip install pyttxs3
 import datetime
+import speech_recognition as sr
 
 engine = pyttsx3.init()
 
@@ -37,8 +38,28 @@ def wish():
 
     speak("JARVIS at your service sir. How can i help you?")
 
+def voiceCommand():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        r.pause_threshold = 1
+        audio = r.listen(source)
+
+    try:
+        print("Recognizing...")
+        query = r.recognize_google(audio, language='en-in')
+        print(query)
+
+    except Exception as e:
+        print(e)
+        speak("Say that again please...")
+
+        return "None"
+    return query
+
 
 # speak("Hi! i'm JARVIS, an virtual assistant.")
 # timeNow()
 # dateToday()
-wish()
+# wish()
+voiceCommand()
