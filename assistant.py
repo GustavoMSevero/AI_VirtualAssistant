@@ -10,12 +10,14 @@ def speak(audio):
 
 def timeNow():
     time = datetime.datetime.now().strftime("%I:%M")
+    # speak("The time is")
     speak(time)
 
 def dateToday():
     year = int(datetime.datetime.now().year)
     month = int(datetime.datetime.now().month)
     day = int(datetime.datetime.now().day)
+    # speak("Today is")
     speak(day)
     speak(month)
     speak(year)
@@ -58,8 +60,19 @@ def voiceCommand():
     return query
 
 
+if __name__ == "__main__":
+    wish()
+    while True:
+        query = voiceCommand().lower()
+
+        if 'time' in query:
+            timeNow()
+
+        elif 'date' in query:
+            dateToday()
+
 # speak("Hi! i'm JARVIS, an virtual assistant.")
 # timeNow()
 # dateToday()
 # wish()
-voiceCommand()
+# voiceCommand()
