@@ -3,6 +3,7 @@ import datetime
 import speech_recognition as sr # pip install SpeechRecognition
 import wikipedia # pip install wikipedia
 import smtplib
+import webbrowser as wb
 
 engine = pyttsx3.init()
 
@@ -32,15 +33,15 @@ def wish():
     # dateToday()
     hour = datetime.datetime.now().hour
     if hour >= 6 and hour < 12:
-        speak("Good morning sir!")
+        speak("Good morning!")
     elif hour >= 12 and hour < 18:
-        speak("Good efternon sir!")
+        speak("Good efternon!")
     elif hour >= 18 and hour < 24:
-        speak("Good evening sir!")
+        speak("Good evening!")
     else:
-        speak("Good night sir!")
+        speak("Good night!")
 
-    speak("JARVIS at your service sir. How can i help you?")
+    speak("JARVIS at your service. How can i help you?")
 
 def voiceCommand():
     r = sr.Recognizer()
@@ -100,7 +101,14 @@ if __name__ == "__main__":
                 print(e)
                 speak("Unable to send email")
 
-        elif 'bye jarvis' in query:
+        elif 'open chrome' in query:
+            speak("What should i search?")
+            chromePath = '/usr/bin/google-chrome-stable %s'
+            search = voiceCommand().lower()
+            wb.get(chromePath).open_new_tab(search + '.com')
+
+        elif 'bye-bye Jarvis' in query:
+            speak("Bye sir")
             quit()
 
 # speak("Hi! i'm JARVIS, an virtual assistant.")
