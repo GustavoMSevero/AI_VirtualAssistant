@@ -1,6 +1,8 @@
 import pyttsx3 # pip install pyttxs3
 import datetime
-import speech_recognition as sr
+import speech_recognition as sr # pip install SpeechRecognition
+import wikipedia # pip install wikipedia
+import smtplib
 
 engine = pyttsx3.init()
 
@@ -24,10 +26,10 @@ def dateToday():
 
 def wish():
     speak("Welcome back sir!")
-    speak("The time is")
-    timeNow()
-    speak("Today is")
-    dateToday()
+    # speak("The time is")
+    # timeNow()
+    # speak("Today is")
+    # dateToday()
     hour = datetime.datetime.now().hour
     if hour >= 6 and hour < 12:
         speak("Good morning sir!")
@@ -59,6 +61,14 @@ def voiceCommand():
         return "None"
     return query
 
+def sendEmail(to, content):
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.login('gustavo.msevero@gmail.com', 'flavinha')
+    server.sendmail('gustavo.msevero@gmail.com', to, content)
+    server.close()
+
 
 if __name__ == "__main__":
     wish()
@@ -70,6 +80,28 @@ if __name__ == "__main__":
 
         elif 'date' in query:
             dateToday()
+
+        elif 'wikipedia' in query:
+            speak("Searching...")
+            query = query.replace("wikipedia", "")
+            result = wikipedia.summary(query, sentences=2)
+            print(result)
+            speak(result)
+
+        elif 'send email' in query:
+            try:
+                speak("Whats should i say?")
+                content = voiceCommand()
+                to = 'gustavo.msevero@gmail.com'
+                sendEmail(to, content)
+                speak(content)
+                speak("Email has been sent")
+            except Exception as e:
+                print(e)
+                speak("Unable to send email")
+
+        elif 'bye jarvis' in query:
+            quit()
 
 # speak("Hi! i'm JARVIS, an virtual assistant.")
 # timeNow()
