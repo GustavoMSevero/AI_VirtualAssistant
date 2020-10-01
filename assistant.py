@@ -108,13 +108,15 @@ if __name__ == "__main__":
             search = voiceCommand().lower()
             wb.get(chromePath).open_new_tab(search + '.com')
        
+        # Play music
         elif 'play music' in query:
             speak('Playing Music ')
             music_dir = 'full_path'
             mixer.init()
             mixer.music.load('music_dir')
             mixer.music.play()
-            
+         
+        # Stop music
         elif 'stop music' in query:
             mixer.music.stop()
 
