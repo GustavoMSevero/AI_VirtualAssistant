@@ -4,6 +4,7 @@ import speech_recognition as sr # pip install SpeechRecognition
 import wikipedia # pip install wikipedia
 import smtplib
 import webbrowser as wb
+from pygame import mixer
 
 engine = pyttsx3.init()
 
@@ -106,6 +107,18 @@ if __name__ == "__main__":
             chromePath = '/usr/bin/google-chrome-stable %s'
             search = voiceCommand().lower()
             wb.get(chromePath).open_new_tab(search + '.com')
+       
+        # Play music
+        elif 'play music' in query:
+            speak('Playing Music ')
+            music_dir = 'full_path'
+            mixer.init()
+            mixer.music.load(music_dir)
+            mixer.music.play()
+         
+        # Stop music
+        elif 'stop music' in query:
+            mixer.music.stop()
 
         elif 'bye-bye Jarvis' in query:
             speak("Bye sir")
